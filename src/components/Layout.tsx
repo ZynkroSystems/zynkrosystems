@@ -20,15 +20,17 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             <span>⚡ LIMITED TIME:</span>
             <span className="font-bold">FREE £300 Automation Audit</span>
             <span className="hidden md:inline">- Only 5 spots left this month!</span>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="ml-2 h-6 px-3 text-xs bg-black text-white hover:bg-gray-800 border-black"
-            >
-              <span className="hidden sm:inline">Claim Now</span>
-              <span className="sm:hidden">Claim</span>
-              <ArrowRight className="ml-1 h-3 w-3" />
-            </Button>
+            <Link to="/contact">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="ml-2 h-6 px-3 text-xs bg-black text-white hover:bg-gray-800 border-black"
+              >
+                <span className="hidden sm:inline">Claim Now</span>
+                <span className="sm:hidden">Claim</span>
+                <ArrowRight className="ml-1 h-3 w-3" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
