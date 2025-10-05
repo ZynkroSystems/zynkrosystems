@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Clock, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -11,6 +11,26 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Urgency Banner */}
+      <div style={{backgroundColor: '#FACC15'}} className="text-black py-2 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
+        <div className="container mx-auto px-4 relative">
+          <div className="flex items-center justify-center gap-2 text-sm font-semibold">
+            <Clock className="h-4 w-4 animate-pulse" />
+            <span className="hidden sm:inline">⚡ LIMITED TIME:</span>
+            <span className="font-bold">FREE £300 Automation Audit</span>
+            <span className="hidden sm:inline">- Only 5 spots left this month!</span>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="ml-2 h-6 px-3 text-xs bg-black text-white hover:bg-gray-800 border-black"
+            >
+              Claim Now <ArrowRight className="ml-1 h-3 w-3" />
+            </Button>
+          </div>
+        </div>
+      </div>
+      
       {/* Navigation */}
       <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container mx-auto px-4">
