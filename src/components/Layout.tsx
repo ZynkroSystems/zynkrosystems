@@ -185,7 +185,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             <Link to="/contact" className="hover:text-primary transition-colors">Free Audit</Link>
           </div>
           <p className="text-xs text-muted-foreground text-center">
-            © {new Date().getFullYear()} ZynkroSystems Ltd. All rights reserved.
+            © {new Date().getFullYear()} ZynkroSystems All rights reserved.
           </p>
         </div>
       </footer>
