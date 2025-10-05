@@ -15,19 +15,20 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       <div style={{backgroundColor: '#FACC15'}} className="text-black py-2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
         <div className="container mx-auto px-4 relative">
-          <div className="flex items-center justify-center gap-2 text-sm font-semibold">
-            <Clock className="h-4 w-4 animate-pulse" />
-            <span>⚡ LIMITED TIME:</span>
-            <span className="font-bold">FREE £300 Automation Audit</span>
-            <span className="hidden md:inline">- Only 5 spots left this month!</span>
+          <div className="flex items-center justify-center gap-1 text-xs sm:text-sm font-semibold flex-wrap">
+            <Clock className="h-3 w-3 sm:h-4 sm:w-4 animate-pulse" />
+            <span className="hidden sm:inline">⚡ LIMITED TIME:</span>
+            <span className="sm:hidden">⚡</span>
+            <span className="font-bold">FREE £300 Audit</span>
+            <span className="hidden lg:inline">- Only 5 spots left!</span>
             <Link to="/contact">
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="ml-2 h-6 px-3 text-xs bg-black text-white hover:bg-gray-800 border-black"
+                className="ml-1 h-5 px-2 text-xs bg-black text-white hover:bg-gray-800 border-black"
               >
                 <span className="hidden sm:inline">Claim Now</span>
-                <span className="sm:hidden">Claim</span>
+                <span className="sm:hidden">Get</span>
                 <ArrowRight className="ml-1 h-3 w-3" />
               </Button>
             </Link>

@@ -257,7 +257,7 @@ export default function Home() {
               Let's see how much time and revenue automation could unlock for your business.
             </h2>
             <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
-              Book your free £300 Automation ROI Audit now. No pressure, no pitch — just clarity on what's possible.
+              Book your free £300 Automation ROI Audit now. No pressure, no pitch just clarity on what's possible.
             </p>
             <Button variant="cta" size="lg" className="text-xl px-12 py-8 shadow-xl hover:shadow-2xl transition-all group">
               Book Free Audit
