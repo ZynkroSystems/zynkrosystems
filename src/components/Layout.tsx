@@ -173,7 +173,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               <a href="mailto:support@zynkrosystems.com" className="hover:text-primary transition-colors">
                 support@zynkrosystems.com
               </a>{" "}
-              · Northampton, UK
+              
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground mb-4">
