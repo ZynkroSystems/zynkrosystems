@@ -15,8 +15,18 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
-            <Link to="/" className="text-xl font-bold text-foreground">
-              ZynkroSystems
+            <Link to="/" className="flex items-center gap-2">
+              <img
+                src="/zynkro_logo.png"
+                alt="ZynkroSystems logo"
+                className="h-8 w-auto"
+                loading="eager"
+                fetchPriority="high"
+              />
+              <span className="text-xl font-bold">
+                <span className="text-white">Zynkro</span>
+                <span style={{color: '#FACC15'}}>Systems</span>
+              </span>
             </Link>
 
             {/* Desktop Navigation */}

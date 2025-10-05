@@ -2,32 +2,25 @@ import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Clock, User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { BlogPostMeta, getAllPosts } from "@/lib/blog";
 
 export default function Blog() {
-  const posts = [
-    {
-      slug: "5-signs-your-business-needs-automation",
-      title: "5 Signs Your Business Is Losing Money to Manual Processes",
-      excerpt: "Most small businesses don't realise how much revenue slips through the cracks. Here are the warning signs that automation could save your business thousands.",
-      date: "2025-03-15",
-      category: "Business Automation"
-    },
-    {
-      slug: "website-conversion-checklist",
-      title: "The 10-Point Website Conversion Checklist Every Small Business Needs",
-      excerpt: "Your website might look fine, but is it converting visitors into leads? Use this checklist to audit your site's performance.",
-      date: "2025-03-10",
-      category: "Web Design"
-    },
-    {
-      slug: "why-businesses-fail-at-lead-followup",
-      title: "Why 80% of Businesses Fail at Lead Follow-Up (And How to Fix It)",
-      excerpt: "Speed matters. Learn why most enquiries go cold, and how simple automation can turn missed opportunities into closed deals.",
-      date: "2025-03-05",
-      category: "Lead Generation"
-    }
-  ];
+  const [posts, setPosts] = useState<BlogPostMeta[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getAllPosts()
+      .then((postsData) => {
+        setPosts(postsData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error loading posts:', error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <>
@@ -59,35 +52,49 @@ export default function Blog() {
         {/* Blog Posts Grid */}
         <section className="py-8 md:py-16 bg-muted">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {posts.map((post) => (
-                <Card key={post.slug} className="flex flex-col">
-                  <CardHeader>
-                    <div className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-3 w-fit">
-                      {post.category}
-                    </div>
-                    <CardTitle className="text-xl">{post.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex-1 flex flex-col">
-                    <p className="text-muted-foreground mb-4 flex-1">{post.excerpt}</p>
-                    <div className="flex items-center text-sm text-muted-foreground mb-4">
-                      <Calendar className="h-4 w-4 mr-2" />
-                      {new Date(post.date).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric"
-                      })}
-                    </div>
-                    <Button variant="outline" size="lg" asChild className="w-full">
-                      <Link to={`/blog/${post.slug}`}>
-                        Read Article
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {loading ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">Loading posts...</p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {posts.map((post) => (
+                  <Card key={post.slug} className="flex flex-col">
+                    <CardHeader>
+                      <div className="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full mb-3 w-fit">
+                        {post.category}
+                      </div>
+                      <CardTitle className="text-xl">{post.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex flex-col">
+                      <p className="text-muted-foreground mb-4 flex-1">{post.excerpt}</p>
+                      <div className="flex items-center text-sm text-muted-foreground mb-4 space-x-4">
+                        <div className="flex items-center">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          {new Date(post.date).toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                          })}
+                        </div>
+                        {post.readTime && (
+                          <div className="flex items-center">
+                            <Clock className="h-4 w-4 mr-2" />
+                            {post.readTime}
+                          </div>
+                        )}
+                      </div>
+                      <Button variant="outline" size="lg" asChild className="w-full">
+                        <Link to={`/blog/${post.slug}`}>
+                          Read Article
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

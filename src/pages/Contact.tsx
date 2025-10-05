@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
 import { CheckCircle2 } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -17,20 +18,51 @@ export default function Contact() {
     website: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would send to a backend
-    console.log("Form submitted:", formData);
-    toast.success("Thank you! We'll be in touch within 24 hours to schedule your free audit.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      website: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+
+    try {
+      // EmailJS configuration - set these in your .env file
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS configuration missing. Please set up your environment variables.');
+      }
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        website: formData.website,
+        message: formData.message,
+        to_email: import.meta.env.VITE_CONTACT_EMAIL || 'your-email@domain.com',
+      };
+
+      const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      if (result.status === 200) {
+        toast.success("Thank you! We'll be in touch within 24 hours to schedule your free audit.");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          website: "",
+          message: "",
+        });
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast.error("Sorry, there was an error sending your message. Please try again or email us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -153,8 +185,8 @@ export default function Contact() {
                     />
                   </div>
 
-                  <Button type="submit" variant="cta" size="lg" className="w-full">
-                    Claim My Free £300 Audit
+                  <Button type="submit" variant="cta" size="lg" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? "Sending..." : "Claim My Free £300 Audit"}
                   </Button>
 
                   <p className="text-xs text-muted-foreground text-center">
