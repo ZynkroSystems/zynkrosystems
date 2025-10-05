@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Clock, Target, TrendingUp, Award, Zap, ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -23,12 +24,16 @@ export default function Home() {
                 process, rebuild it, and automate it for you or we work free until you see results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button variant="cta" size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all group">
-                  Book Free Audit
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Button variant="cta" size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all group" asChild>
+                  <Link to="/contact">
+                    Book Free Audit
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-2">
-                  See Case Studies
+                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-2" asChild>
+                  <Link to="/case-studies">
+                    See Case Studies
+                  </Link>
                 </Button>
               </div>
               <div className="grid grid-cols-3 gap-4 pt-4">
@@ -137,9 +142,11 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="cta" size="lg" className="text-lg px-8 py-6 shadow-lg group">
-              Get My Free Audit
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <Button variant="cta" size="lg" className="text-lg px-8 py-6 shadow-lg group" asChild>
+              <Link to="/contact">
+                Get My Free Audit
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
         </div>
@@ -216,9 +223,11 @@ export default function Home() {
             </CardContent>
           </Card>
           <div className="mt-10 text-center space-y-6">
-            <Button variant="cta" size="lg" className="text-xl px-12 py-8 shadow-2xl hover:shadow-3xl transition-all group w-full sm:w-auto">
-              Claim My Free Audit Call
-              <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            <Button variant="cta" size="lg" className="text-xl px-12 py-8 shadow-2xl hover:shadow-3xl transition-all group w-full sm:w-auto" asChild>
+              <Link to="/contact">
+                Claim My Free Audit Call
+                <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
             <div className="bg-card border-2 border-primary/20 rounded-xl p-6 max-w-2xl mx-auto">
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -259,9 +268,11 @@ export default function Home() {
             <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
               Book your free £300 Automation ROI Audit now. No pressure, no pitch just clarity on what's possible.
             </p>
-            <Button variant="cta" size="lg" className="text-xl px-12 py-8 shadow-xl hover:shadow-2xl transition-all group">
-              Book Free Audit
-              <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            <Button variant="cta" size="lg" className="text-xl px-12 py-8 shadow-xl hover:shadow-2xl transition-all group" asChild>
+              <Link to="/contact">
+                Book Free Audit
+                <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
             <div className="mt-8 flex items-center justify-center gap-8 text-sm text-muted-foreground flex-wrap">
               <div className="flex items-center gap-2">
