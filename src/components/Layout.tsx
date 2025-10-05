@@ -20,7 +20,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-6">
               <Link
                 to="/"
                 className={`text-sm font-medium transition-colors ${
@@ -36,6 +36,22 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 }`}
               >
                 Services
+              </Link>
+              <Link
+                to="/case-studies"
+                className={`text-sm font-medium transition-colors ${
+                  isActive("/case-studies") ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Case Studies
+              </Link>
+              <Link
+                to="/blog"
+                className={`text-sm font-medium transition-colors ${
+                  isActive("/blog") ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Blog
               </Link>
               <Button variant="cta" size="lg" asChild>
                 <Link to="/contact">Free Audit</Link>
@@ -73,6 +89,24 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               >
                 Services
               </Link>
+              <Link
+                to="/case-studies"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block text-sm font-medium ${
+                  isActive("/case-studies") ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                Case Studies
+              </Link>
+              <Link
+                to="/blog"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block text-sm font-medium ${
+                  isActive("/blog") ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                Blog
+              </Link>
               <Button variant="cta" size="lg" className="w-full" asChild>
                 <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
                   Free Audit
@@ -95,16 +129,28 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Footer */}
       <footer className="border-t border-border bg-muted py-8 mt-16 mb-20 md:mb-0">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">ZynkroSystems Ltd</strong> · Building automated growth
-            systems for small businesses
-          </p>
-          <p className="text-sm text-muted-foreground mt-2">
-            <a href="mailto:support@zynkrosystems.com" className="hover:text-primary transition-colors">
-              support@zynkrosystems.com
-            </a>{" "}
-            · Northampton, UK
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-foreground">ZynkroSystems Ltd</strong> · Building automated growth
+              systems for small businesses
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              <a href="mailto:support@zynkrosystems.com" className="hover:text-primary transition-colors">
+                support@zynkrosystems.com
+              </a>{" "}
+              · Northampton, UK
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground mb-4">
+            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+            <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
+            <Link to="/case-studies" className="hover:text-primary transition-colors">Case Studies</Link>
+            <Link to="/blog" className="hover:text-primary transition-colors">Blog</Link>
+            <Link to="/contact" className="hover:text-primary transition-colors">Free Audit</Link>
+          </div>
+          <p className="text-xs text-muted-foreground text-center">
+            © {new Date().getFullYear()} ZynkroSystems Ltd. All rights reserved.
           </p>
         </div>
       </footer>

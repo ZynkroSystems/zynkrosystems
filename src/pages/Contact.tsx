@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -40,7 +41,20 @@ export default function Contact() {
   };
 
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>Book Free Audit - £300 Automation ROI Assessment | ZynkroSystems</title>
+        <meta name="description" content="Book your free £300 Automation ROI Audit. No pressure, no pitch. Discover exactly where your business is losing leads and how automation can recover them." />
+        <meta property="og:title" content="Book Free Audit - £300 Automation ROI Assessment | ZynkroSystems" />
+        <meta property="og:description" content="Book your free £300 Automation ROI Audit. Discover where your business is losing leads and how automation can fix it." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://zynkrosystems.com/contact" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Book Free Audit - £300 Automation ROI Assessment" />
+        <meta name="twitter:description" content="Free audit worth £300. Discover where your business is losing leads." />
+        <link rel="canonical" href="https://zynkrosystems.com/contact" />
+      </Helmet>
+      <div>
       {/* Hero Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 text-center max-w-3xl">
@@ -242,6 +256,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

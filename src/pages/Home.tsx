@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -6,7 +7,54 @@ import heroImage from "@/assets/hero-automation.jpg";
 
 export default function Home() {
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>ZynkroSystems - Business Automation & Website Rebuild for UK Small Businesses</title>
+        <meta name="description" content="We rebuild and automate your business in 14 days so you never miss a lead again. Free £300 automation audit for UK small businesses. 45-day lead flow guarantee." />
+        <meta property="og:title" content="ZynkroSystems - Business Automation & Website Rebuild for UK Small Businesses" />
+        <meta property="og:description" content="Stop losing customers to bad websites and slow follow-ups. We rebuild and automate your business in 14 days with a 45-day lead flow guarantee." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://zynkrosystems.com/" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="ZynkroSystems - Business Automation & Website Rebuild" />
+        <meta name="twitter:description" content="We rebuild and automate your business in 14 days so you never miss a lead again." />
+        <link rel="canonical" href="https://zynkrosystems.com/" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ZynkroSystems Ltd",
+            "url": "https://zynkrosystems.com",
+            "logo": "https://zynkrosystems.com/logo.png",
+            "description": "Building automated growth systems for small businesses",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Northampton",
+              "addressCountry": "UK"
+            },
+            "email": "support@zynkrosystems.com",
+            "areaServed": "GB"
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "ZynkroSystems Ltd",
+            "image": "https://zynkrosystems.com/logo.png",
+            "telephone": "",
+            "email": "support@zynkrosystems.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Northampton",
+              "addressCountry": "UK"
+            },
+            "url": "https://zynkrosystems.com",
+            "priceRange": "££"
+          })}
+        </script>
+      </Helmet>
+      <div>
       {/* Hero Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -243,6 +291,7 @@ export default function Home() {
           </Button>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

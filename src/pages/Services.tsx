@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -5,7 +6,20 @@ import { Globe, Zap, RefreshCcw } from "lucide-react";
 
 export default function Services() {
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>Services - Website Rebuild & Automation Systems | ZynkroSystems</title>
+        <meta name="description" content="ZynkroSites: modern responsive websites that convert. ZynkroFlow: business automation systems that save hours and capture every lead. Done-for-you in 14 days." />
+        <meta property="og:title" content="Services - Website Rebuild & Automation Systems | ZynkroSystems" />
+        <meta property="og:description" content="ZynkroSites: modern responsive websites that convert. ZynkroFlow: business automation systems that save hours and capture every lead." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://zynkrosystems.com/services" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Services - Website Rebuild & Automation Systems | ZynkroSystems" />
+        <meta name="twitter:description" content="ZynkroSites: modern responsive websites that convert. ZynkroFlow: business automation systems." />
+        <link rel="canonical" href="https://zynkrosystems.com/services" />
+      </Helmet>
+      <div>
       {/* Hero Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 text-center max-w-3xl">
@@ -216,6 +230,7 @@ export default function Services() {
           </Button>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
