@@ -1,0 +1,113 @@
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+
+export const Layout = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isActive = (path: string) => location.pathname === path;
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Navigation */}
+      <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <div className="container mx-auto px-4">
+          <div className="flex h-16 items-center justify-between">
+            <Link to="/" className="text-xl font-bold text-foreground">
+              ZynkroSystems
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
+              <Link
+                to="/"
+                className={`text-sm font-medium transition-colors ${
+                  isActive("/") ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Home
+              </Link>
+              <Link
+                to="/services"
+                className={`text-sm font-medium transition-colors ${
+                  isActive("/services") ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Services
+              </Link>
+              <Button variant="cta" size="lg" asChild>
+                <Link to="/contact">Free Audit</Link>
+              </Button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {mobileMenuOpen && (
+            <div className="md:hidden py-4 space-y-4">
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block text-sm font-medium ${
+                  isActive("/") ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                Home
+              </Link>
+              <Link
+                to="/services"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block text-sm font-medium ${
+                  isActive("/services") ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                Services
+              </Link>
+              <Button variant="cta" size="lg" className="w-full" asChild>
+                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+                  Free Audit
+                </Link>
+              </Button>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="flex-1">{children}</main>
+
+      {/* Mobile Sticky CTA */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border z-40">
+        <Button variant="cta" size="lg" className="w-full" asChild>
+          <Link to="/contact">Book Free Audit (Worth £300)</Link>
+        </Button>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-muted py-8 mt-16 mb-20 md:mb-0">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm text-muted-foreground">
+            <strong className="text-foreground">ZynkroSystems Ltd</strong> · Building automated growth
+            systems for small businesses
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            <a href="mailto:support@zynkrosystems.com" className="hover:text-primary transition-colors">
+              support@zynkrosystems.com
+            </a>{" "}
+            · Northampton, UK
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+};
