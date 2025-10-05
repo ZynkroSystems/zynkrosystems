@@ -17,15 +17,17 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="container mx-auto px-4 relative">
           <div className="flex items-center justify-center gap-2 text-sm font-semibold">
             <Clock className="h-4 w-4 animate-pulse" />
-            <span className="hidden sm:inline">⚡ LIMITED TIME:</span>
+            <span>⚡ LIMITED TIME:</span>
             <span className="font-bold">FREE £300 Automation Audit</span>
-            <span className="hidden sm:inline">- Only 5 spots left this month!</span>
+            <span className="hidden md:inline">- Only 5 spots left this month!</span>
             <Button 
               variant="outline" 
               size="sm" 
               className="ml-2 h-6 px-3 text-xs bg-black text-white hover:bg-gray-800 border-black"
             >
-              Claim Now <ArrowRight className="ml-1 h-3 w-3" />
+              <span className="hidden sm:inline">Claim Now</span>
+              <span className="sm:hidden">Claim</span>
+              <ArrowRight className="ml-1 h-3 w-3" />
             </Button>
           </div>
         </div>
