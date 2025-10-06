@@ -27,9 +27,9 @@ export default async function handler(req: any, res: any) {
     }
 
     console.log("Attempting to send email with:", { name, email, messageLength: message.length });
-    console.log("RESEND_API_KEY exists:", !!process.env.RESEND_API_KEY);
+    console.log("RESEND_KEY exists:", !!process.env.RESEND_KEY);
 
-    const result = await resend.emails.send({
+    const emailData = {
       from: "Contact Form <onboarding@resend.dev>",
       to: "support@zynkrosystems.com",
       subject: `New enquiry from ${name}`,
@@ -44,10 +44,13 @@ export default async function handler(req: any, res: any) {
           <p><small>Sent from zynkrosystems.com contact form</small></p>
         </div>
       `,
-    });
+    };
+
+    console.log("Email data:", emailData);
+    const result = await resend.emails.send(emailData);
 
     console.log("Email sent successfully:", result);
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, emailId: result.data?.id });
   } catch (error) {
     console.error("Email send error:", error);
     console.error("Error details:", JSON.stringify(error, null, 2));
