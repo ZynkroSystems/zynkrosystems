@@ -31,7 +31,7 @@ export default async function handler(req: any, res: any) {
 
     const emailData = {
       from: "Contact Form <onboarding@resend.dev>",
-      to: "support@zynkrosystems.com",
+      to: "angelo.rosu2001@gmail.com", // Changed to test delivery
       subject: `New enquiry from ${name}`,
       html: `
         <div style="font-family:sans-serif;">
