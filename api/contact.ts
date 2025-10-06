@@ -32,7 +32,7 @@ export default async function handler(req: any, res: any) {
 
     const emailData = {
       from: "Contact Form <onboarding@resend.dev>",
-      to: "angelo@zynkrosystems.com",
+      to: "angelo@zynkrosystems.com", // Use verified email address
       subject: `New enquiry from ${name}`,
       react: ContactEmail({ name, email, message }),
     };
