@@ -49,8 +49,15 @@ export default async function handler(req: any, res: any) {
     console.log("Email data:", emailData);
     const result = await resend.emails.send(emailData);
 
-    console.log("Email sent successfully:", result);
-    return res.status(200).json({ success: true, emailId: result.data?.id });
+    console.log("Resend API response:", JSON.stringify(result, null, 2));
+    console.log("Email ID:", result.data?.id);
+    console.log("Resend error:", result.error);
+    
+    return res.status(200).json({ 
+      success: true, 
+      emailId: result.data?.id,
+      resendResponse: result
+    });
   } catch (error) {
     console.error("Email send error:", error);
     console.error("Error details:", JSON.stringify(error, null, 2));
