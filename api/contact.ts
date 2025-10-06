@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { ContactEmail } from "./contact-email";
 
 // Check if API key exists
 if (!process.env.RESEND_KEY) {
@@ -31,22 +32,17 @@ export default async function handler(req: any, res: any) {
 
     const emailData = {
       from: "Contact Form <onboarding@resend.dev>",
-      to: "angelo.rosu2001@gmail.com", // Changed to test delivery
+      to: "angelo.rosu2001@gmail.com",
       subject: `New enquiry from ${name}`,
-      html: `
-        <div style="font-family:sans-serif;">
-          <h2>New Contact Form Submission</h2>
-          <p><b>Name:</b> ${name}</p>
-          <p><b>Email:</b> ${email}</p>
-          <p><b>Message:</b></p>
-          <p>${message}</p>
-          <hr>
-          <p><small>Sent from zynkrosystems.com contact form</small></p>
-        </div>
-      `,
+      react: ContactEmail({ name, email, message }),
     };
 
-    console.log("Email data being sent:", JSON.stringify(emailData, null, 2));
+    console.log("Email data being sent:", {
+      from: emailData.from,
+      to: emailData.to,
+      subject: emailData.subject,
+      hasReactComponent: !!emailData.react
+    });
     console.log("About to call resend.emails.send...");
     
     const result = await resend.emails.send(emailData);
