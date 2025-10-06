@@ -1,5 +1,4 @@
 import { Resend } from "resend";
-import { ContactEmail } from "./contact-email";
 
 // Check if API key exists
 if (!process.env.RESEND_KEY) {
@@ -7,6 +6,47 @@ if (!process.env.RESEND_KEY) {
 }
 
 const resend = new Resend(process.env.RESEND_KEY);
+
+// Simple email template function
+function createEmailHTML(name: string, email: string, message: string) {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Contact Form Submission</title>
+    </head>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif; background-color: #ffffff; margin: 0; padding: 20px;">
+      <div style="max-width: 560px; margin: 0 auto; padding: 20px;">
+        <h1 style="color: #333; font-size: 24px; font-weight: bold; margin: 40px 0 20px; padding: 0;">New Contact Form Submission</h1>
+        
+        <p style="color: #333; font-size: 16px; line-height: 26px; margin: 12px 0;">
+          <strong>Name:</strong> ${name}
+        </p>
+        
+        <p style="color: #333; font-size: 16px; line-height: 26px; margin: 12px 0;">
+          <strong>Email:</strong> ${email}
+        </p>
+        
+        <p style="color: #333; font-size: 16px; line-height: 26px; margin: 12px 0;">
+          <strong>Message:</strong>
+        </p>
+        
+        <div style="color: #333; font-size: 16px; line-height: 26px; margin: 12px 0; padding: 12px; background-color: #f9f9f9; border-radius: 4px; border: 1px solid #e1e1e1;">
+          ${message.replace(/\n/g, '<br>')}
+        </div>
+        
+        <hr style="border-color: #cccccc; margin: 20px 0;">
+        
+        <p style="color: #8898aa; font-size: 12px; margin: 20px 0 0 0;">
+          Sent from zynkrosystems.com contact form
+        </p>
+      </div>
+    </body>
+    </html>
+  `;
+}
 
 export default async function handler(req: any, res: any) {
   // Enable CORS for frontend
@@ -34,14 +74,14 @@ export default async function handler(req: any, res: any) {
       from: "Contact Form <onboarding@resend.dev>",
       to: "angelo.rosu2001@gmail.com",
       subject: `New enquiry from ${name}`,
-      react: ContactEmail({ name, email, message }),
+      html: createEmailHTML(name, email, message),
     };
 
     console.log("Email data being sent:", {
       from: emailData.from,
       to: emailData.to,
       subject: emailData.subject,
-      hasReactComponent: !!emailData.react
+      hasHTML: !!emailData.html
     });
     console.log("About to call resend.emails.send...");
     
