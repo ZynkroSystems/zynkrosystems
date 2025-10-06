@@ -1,11 +1,11 @@
 import { Resend } from "resend";
 
 // Check if API key exists
-if (!process.env.RESEND_API_KEY) {
-  throw new Error("RESEND_API_KEY environment variable is not set");
+if (!process.env.RESEND_KEY) {
+  throw new Error("RESEND_KEY environment variable is not set");
 }
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_KEY);
 
 export default async function handler(req: any, res: any) {
   // Enable CORS for frontend
