@@ -1,5 +1,15 @@
 import { Resend } from "resend";
-import { ContactEmail } from "./contact-email.tsx";
+import * as React from 'react';
+import {
+  Html,
+  Head,
+  Body,
+  Container,
+  Section,
+  Text,
+  Heading,
+  Hr,
+} from '@react-email/components';
 
 // Check if API key exists
 if (!process.env.RESEND_KEY) {
@@ -7,6 +17,32 @@ if (!process.env.RESEND_KEY) {
 }
 
 const resend = new Resend(process.env.RESEND_KEY);
+
+// Email template component
+function ContactEmail({ name, email, message }: { name: string; email: string; message: string }) {
+  return React.createElement(Html, { lang: "en" },
+    React.createElement(Head),
+    React.createElement(Body, { style: { backgroundColor: '#ffffff', fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif' } },
+      React.createElement(Container, { style: { margin: '0 auto', padding: '20px 0 48px', maxWidth: '560px' } },
+        React.createElement(Section, null,
+          React.createElement(Heading, { style: { color: '#333', fontSize: '24px', fontWeight: 'bold', margin: '40px 0 20px', padding: '0' } }, "New Contact Form Submission"),
+          React.createElement(Text, { style: { color: '#333', fontSize: '16px', lineHeight: '26px', margin: '12px 0' } },
+            React.createElement('strong', null, "Name: "), name
+          ),
+          React.createElement(Text, { style: { color: '#333', fontSize: '16px', lineHeight: '26px', margin: '12px 0' } },
+            React.createElement('strong', null, "Email: "), email
+          ),
+          React.createElement(Text, { style: { color: '#333', fontSize: '16px', lineHeight: '26px', margin: '12px 0' } },
+            React.createElement('strong', null, "Message:")
+          ),
+          React.createElement(Text, { style: { color: '#333', fontSize: '16px', lineHeight: '26px', margin: '12px 0', padding: '12px', backgroundColor: '#f9f9f9', borderRadius: '4px', border: '1px solid #e1e1e1' } }, message),
+          React.createElement(Hr, { style: { borderColor: '#cccccc', margin: '20px 0' } }),
+          React.createElement(Text, { style: { color: '#8898aa', fontSize: '12px', margin: '20px 0 0 0' } }, "Sent from zynkrosystems.com contact form")
+        )
+      )
+    )
+  );
+}
 
 export default async function handler(req: any, res: any) {
   // Enable CORS for frontend
