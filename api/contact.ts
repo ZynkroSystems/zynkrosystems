@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { ContactEmail } from "./contact-email";
+import { ContactEmail } from "./contact-email.tsx";
 
 // Check if API key exists
 if (!process.env.RESEND_KEY) {
