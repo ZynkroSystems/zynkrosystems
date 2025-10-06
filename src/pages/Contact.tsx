@@ -24,6 +24,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
+      // Use Resend API endpoint - force rebuild
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
