@@ -46,16 +46,36 @@ export default async function handler(req: any, res: any) {
       `,
     };
 
-    console.log("Email data:", emailData);
+    console.log("Email data being sent:", JSON.stringify(emailData, null, 2));
+    console.log("About to call resend.emails.send...");
+    
     const result = await resend.emails.send(emailData);
-
+    
+    console.log("Raw Resend result:", result);
     console.log("Resend API response:", JSON.stringify(result, null, 2));
     console.log("Email ID:", result.data?.id);
     console.log("Resend error:", result.error);
+    console.log("Success?", !!result.data?.id);
+
+    if (result.error) {
+      console.error("Resend returned an error:", result.error);
+      return res.status(500).json({ 
+        error: "Resend API error", 
+        details: result.error 
+      });
+    }
+
+    if (!result.data?.id) {
+      console.error("No email ID returned - email may not have been sent");
+      return res.status(500).json({ 
+        error: "No email ID returned", 
+        resendResponse: result 
+      });
+    }
     
     return res.status(200).json({ 
       success: true, 
-      emailId: result.data?.id,
+      emailId: result.data.id,
       resendResponse: result
     });
   } catch (error) {
