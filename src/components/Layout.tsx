@@ -167,7 +167,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-6">
             <p className="text-sm text-muted-foreground">
-              <strong className="text-foreground">ZynkroSystems Ltd</strong> · Building automated growth
+              <strong className="text-foreground">ZynkroSystems</strong> · Building automated growth
               systems for small businesses
             </p>
             <p className="text-sm text-muted-foreground mt-2">
