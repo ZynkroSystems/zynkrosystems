@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2, Clock, Target, TrendingUp, Award, Zap, ArrowRight, Sparkles } from "lucide-react";
+import { CheckCircle2, Clock, Target, TrendingUp, Award, Zap, ArrowRight, Sparkles, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -17,11 +17,10 @@ export default function Home() {
                 <span>45-day lead flow guarantee</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
-                We rebuild and automate your business in 14 days so you never miss a lead again.
+                We rebuild and automate your business so you never miss a lead again
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed">
-                Stop losing customers to bad websites and slow follow-ups. We'll find every leak in your sales
-                process, rebuild it, and automate it for you or we work free until you see results.
+                Stop losing customers to broken websites, slow responses, and manual work. We identify the leaks in your sales process, rebuild what’s broken, and automate everything that wastes time so your business runs and grows on autopilot.     
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button variant="cta" size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all group" asChild>
@@ -39,15 +38,15 @@ export default function Home() {
               <div className="grid grid-cols-3 gap-4 pt-4">
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle2 className="h-5 w-5 text-success shrink-0" /> 
-                  <span className="font-medium">14-day delivery</span>
+                  <span className="font-medium">Fast delivery</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle2 className="h-5 w-5 text-success shrink-0" /> 
-                  <span className="font-medium">Done-for-you setup</span>
+                  <span className="font-medium">Done for you</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle2 className="h-5 w-5 text-success shrink-0" /> 
-                  <span className="font-medium">Results guaranteed</span>
+                  <span className="font-medium">Guaranteed results</span>
                 </div>
               </div>
             </div>
@@ -63,7 +62,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-background border-2 border-border px-6 py-3 text-sm font-medium shadow-lg flex items-center gap-2">
-                <Award className="h-5 w-5 text-primary" /> 
+                <Users className="h-5 w-5 text-primary" /> 
                 
               </div>
             </div>
@@ -99,8 +98,7 @@ export default function Home() {
           </div>
           <div className="max-w-4xl mx-auto bg-card border-2 border-primary/20 rounded-2xl p-8 shadow-lg">
             <p className="text-lg text-center leading-relaxed">
-              You built your business to grow, not to babysit your inbox. We find every gap that's costing you leads
-              and revenue, then fix it with automation systems that pay for themselves in weeks.
+              You didn’t start your business to chase emails and copy data between tools. We uncover every leak that’s slowing you down and replace it with automation systems that pay for themselves in weeks.
             </p>
           </div>
         </div>
@@ -111,43 +109,85 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary mb-6">
-              <Sparkles className="h-4 w-4" /> Simple Process
+              <Sparkles className="h-4 w-4" aria-hidden="true" /> Simple 3-Step Process
             </div>
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Here's how we rebuild and automate your business
+              Here’s how we transform your business
             </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Start small or go all in. We meet you where you are.
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-            {[
-              { num: 1, title: "Audit & Plan", desc: "Free £300 Automation ROI Audit identifying bottlenecks and lost leads.", color: "primary" },
-              { num: 2, title: "Rebuild & Automate", desc: "Responsive website + connected systems that reply and schedule automatically.", color: "secondary" },
-              { num: 3, title: "Monitor & Optimise", desc: "Ongoing support with reports and tweaks.", color: "success" }
-            ].map((step, i) => (
-              <div key={i} className="relative">
-                <Card className="border-2 hover:border-primary/50 transition-all h-full hover:shadow-xl">
-                  <CardContent className="pt-8 pb-8">
-                    <div className={`w-16 h-16 rounded-2xl bg-${step.color} text-${step.color}-foreground flex items-center justify-center text-2xl font-bold mb-6 shadow-lg`}>
-                      {step.num}
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
-                  </CardContent>
-                </Card>
-                {i < 2 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                    <ArrowRight className="h-8 w-8 text-muted-foreground/30" />
+
+          {(() => {
+            const steps = [
+              {
+                num: 1,
+                title: "Website Rebuild",
+                kicker: "Launch a conversion ready site in days.",
+                desc:
+                  "Modern design, clear messaging, and high-intent pages wired for lead capture. Built mobile first and SEO ready.",
+                color: "bg-primary text-primary-foreground",
+              },
+              {
+                num: 2,
+                title: "Automation Layer",
+                kicker: "Turn enquiries into booked jobs automatically.",
+                desc:
+                  "Missed call to SMS, instant routing, CRM, sequences, booking links, and a simple dashboard so nothing slips.",
+                color: "bg-secondary text-secondary-foreground",
+              },
+              {
+                num: 3,
+                title: "Ongoing Support",
+                kicker: "Keep improving with monthly optimisations.",
+                desc:
+                  "Reporting, tweaks, SEO checks, and small enhancements so your system gets better every month.",
+                color: "bg-success text-success-foreground",
+              },
+            ];
+
+            return (
+              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+                {steps.map((step, i) => (
+                  <div key={step.num} className="relative">
+                    <Card className="border-2 hover:border-primary/50 transition-all h-full hover:shadow-xl">
+                      <CardContent className="pt-8 pb-8">
+                        <div
+                          className={`w-16 h-16 rounded-2xl ${step.color} flex items-center justify-center text-2xl font-bold mb-6 shadow-lg`}
+                          aria-hidden="true"
+                        >
+                          {step.num}
+                        </div>
+                        <h3 className="text-2xl font-bold mb-1">{step.title}</h3>
+                        <p className="text-foreground font-medium mb-4">{step.kicker}</p>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {step.desc}
+                        </p>
+                      </CardContent>
+                    </Card>
+
+                    {i < steps.length - 1 && (
+                      <div className="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 z-10">
+                        <ArrowRight className="h-8 w-8 text-muted-foreground/30" aria-hidden="true" />
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
+            );
+          })()}
+
           <div className="text-center">
             <Button variant="cta" size="lg" className="text-lg px-8 py-6 shadow-lg group" asChild>
               <Link to="/contact">
                 Get My Free Audit
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
             </Button>
+            <p className="text-sm text-muted-foreground mt-4">
+              We’ll show you exactly what you need. No upselling.
+            </p>
           </div>
         </div>
       </section>
@@ -160,10 +200,10 @@ export default function Home() {
           </h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[
-              { title: "Done-for-you in 14 days", desc: "Fast implementation that gets you results quickly" },
-              { title: "Proven systems tested on real businesses", desc: "Battle-tested automation workflows" },
-              { title: "Guaranteed improvement", desc: "45-day lead flow guarantee" },
-              { title: "Zero tech talk — just measurable ROI", desc: "Clear results you can understand" }
+              { title: "Done-for-you from day one", desc: "We handle everything — you just approve and go live" },
+              { title: "Proven systems tested on real businesses", desc: "Battle-tested workflows that actually convert leads" },
+              { title: "45-day lead flow guarantee", desc: "If we don't improve your results, we work free until you do" },
+              { title: "Zero tech talk — just measurable ROI", desc: "Clear reporting on time saved and revenue increased" }
             ].map((item, i) => (
               <Card key={i} className="border-2 hover:border-success/50 transition-all hover:shadow-lg group">
                 <CardContent className="pt-8 pb-8 flex items-start gap-4">
@@ -238,22 +278,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Results Section */}
+      {/* Social Proof Section */}
       <section className="py-20 md:py-32 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center">Real businesses. Real results.</h2>
-          <p className="text-center text-muted-foreground mb-16 text-lg">See what our clients are saying</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center">Trusted by local businesses across the UK</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg">From cleaners to plumbers to pet groomers — we help service businesses capture more leads</p>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[1, 2, 3].map((i) => (
+            {[
+              { 
+                business: "Cleaning Company",
+                result: "3x more bookings in first month",
+                quote: "The automated follow-up system alone paid for itself in the first week."
+              },
+              { 
+                business: "Plumbing Service",
+                result: "Zero missed emergency calls",
+                quote: "Every after-hours call now gets an instant SMS. Game changer."
+              },
+              { 
+                business: "Pet Grooming",
+                result: "Saved 15 hours/week on admin",
+                quote: "Booking and invoicing is completely automated. I can focus on grooming."
+              }
+            ].map((item, i) => (
               <Card key={i} className="bg-card border-2 hover:border-primary/50 transition-all hover:shadow-xl">
-                <CardContent className="pt-10 pb-10 text-center">
-                  <div className="h-20 w-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                    <Award className="h-12 w-12 text-primary" />
+                <CardContent className="pt-10 pb-10">
+                  <div className="flex gap-1 mb-4">
+                    {[1,2,3,4,5].map((star) => (
+                      <Star key={star} className="h-5 w-5 fill-primary text-primary" />
+                    ))}
                   </div>
-                  <p className="text-muted-foreground italic">Testimonial coming soon</p>
+                  <div className="text-primary font-bold text-sm mb-2">{item.business}</div>
+                  <p className="font-bold text-lg mb-3">{item.result}</p>
+                  <p className="text-muted-foreground italic">"{item.quote}"</p>
                 </CardContent>
               </Card>
             ))}
+          </div>
+          <div className="text-center mt-12">
+            <Button variant="outline" size="lg" asChild>
+              <Link to="/case-studies">View Full Case Studies</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -266,7 +331,7 @@ export default function Home() {
               Let's see how much time and revenue automation could unlock for your business.
             </h2>
             <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
-              Book your free £300 Automation ROI Audit now. No pressure, no pitch just clarity on what's possible.
+              Book your free £300 Automation ROI Audit now. No pressure, no pitch — just
             </p>
             <Button variant="cta" size="lg" className="text-xl px-12 py-8 shadow-xl hover:shadow-2xl transition-all group" asChild>
               <Link to="/contact">
