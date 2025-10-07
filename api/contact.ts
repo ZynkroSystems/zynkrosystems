@@ -161,6 +161,14 @@ export default async function handler(req: any, res: any) {
       data.serviceType === "audit" ? "Audit" :
       data.serviceType === "both" ? "Demo + Audit" :
       "Lead";
+    
+    // Sanitized tag value (no spaces or special chars)
+    const badgeTag =
+      data.serviceType === "demo" ? "demo_24h" :
+      data.serviceType === "audit" ? "audit" :
+      data.serviceType === "both" ? "demo_audit" :
+      "lead";
+      
     const city = data.city ? ` • ${data.city}` : "";
     const subject = `[${badge}] ${data.name}${city}`;
 
@@ -187,7 +195,7 @@ export default async function handler(req: any, res: any) {
       text,
       tags: [
         { name: "source", value: data.utm?.utm_source || "direct" },
-        { name: "type", value: badge }
+        { name: "type", value: badgeTag }
       ],
     };
 
