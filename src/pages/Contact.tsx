@@ -4,9 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -16,29 +20,104 @@ export default function Contact() {
     company: "",
     website: "",
     message: "",
+    provideMoreInfo: false,
+    serviceType: "",
+    currentLeadVolume: "",
+    responseTime: "",
+    biggestChallenge: "",
+    monthlyRevenue: "",
+    // New optional fields
+    contactMethod: "",
+    contactTime: "",
+    city: "",
+    timeline: "",
+    budget: "",
+    hearAbout: "",
+    consent: false,
+    // Attribution (hidden)
+    utm: {
+      utm_source: "",
+      utm_medium: "",
+      utm_campaign: "",
+      utm_term: "",
+      utm_content: "",
+      referrer: ""
+    },
+    // Honeypot
+    companyPosition: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  // Read URL params on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const offer = params.get("offer"); // "demo24" | "audit" | "both"
+    const source = params.get("source");
+    
+    const utm = {
+      utm_source: params.get("utm_source") || source || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      utm_term: params.get("utm_term") || "",
+      utm_content: params.get("utm_content") || "",
+      referrer: document.referrer || ""
+    };
+
+    setFormData((prev) => ({
+      ...prev,
+      serviceType: offer === "demo24" ? "demo" : offer === "audit" ? "audit" : offer === "both" ? "both" : prev.serviceType,
+      utm
+    }));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot check - silently drop spam
+    if (formData.companyPosition) {
+      return;
+    }
+
     setIsSubmitting(true);
+    setSubmitSuccess(false);
+    setSubmitError("");
 
     try {
-      // Use Resend API endpoint - force rebuild
+      // Compose comprehensive message
+      const composedMessage = 
+        `Phone: ${formData.phone}\nCompany: ${formData.company}\nWebsite: ${formData.website}\nCity: ${formData.city || "Not specified"}\n` +
+        `Preferred Contact: ${formData.contactMethod || "-"} @ ${formData.contactTime || "-"}\n` +
+        `Timeline: ${formData.timeline || "-"} | Budget: ${formData.budget || "-"} | Heard About Us: ${formData.hearAbout || "-"}\n\n` +
+        `Message:\n${formData.message}\n\n` +
+        (formData.provideMoreInfo
+          ? `=== ADDITIONAL INFORMATION ===\nService Type: ${formData.serviceType}\nCurrent Lead Volume: ${formData.currentLeadVolume}\n` +
+            `Response Time: ${formData.responseTime}\nBiggest Challenge: ${formData.biggestChallenge}\nMonthly Revenue: ${formData.monthlyRevenue}\n`
+          : '') +
+        `\n=== ATTRIBUTION ===\n` +
+        `UTM Source: ${formData.utm.utm_source || "-"}\nUTM Medium: ${formData.utm.utm_medium || "-"}\nUTM Campaign: ${formData.utm.utm_campaign || "-"}\n` +
+        `UTM Term: ${formData.utm.utm_term || "-"}\nUTM Content: ${formData.utm.utm_content || "-"}\nReferrer: ${formData.utm.referrer || "-"}`;
+
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: composedMessage,
+      };
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: `Phone: ${formData.phone}\nCompany: ${formData.company}\nWebsite: ${formData.website}\n\nMessage:\n${formData.message}`,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
+        setSubmitSuccess(true);
         toast.success("Thank you! We'll be in touch within 24 hours to schedule your free audit.");
+        
+        // Reset form
         setFormData({
           name: "",
           email: "",
@@ -46,12 +125,35 @@ export default function Contact() {
           company: "",
           website: "",
           message: "",
+          provideMoreInfo: false,
+          serviceType: "",
+          currentLeadVolume: "",
+          responseTime: "",
+          biggestChallenge: "",
+          monthlyRevenue: "",
+          contactMethod: "",
+          contactTime: "",
+          city: "",
+          timeline: "",
+          budget: "",
+          hearAbout: "",
+          consent: false,
+          utm: {
+            utm_source: "",
+            utm_medium: "",
+            utm_campaign: "",
+            utm_term: "",
+            utm_content: "",
+            referrer: ""
+          },
+          companyPosition: ""
         });
       } else {
         throw new Error('Failed to send message');
       }
     } catch (error) {
       console.error('Error sending message:', error);
+      setSubmitError("Sorry, there was an error sending your message. Please try again or email us directly at support@zynkrosystems.com");
       toast.error("Sorry, there was an error sending your message. Please try again or email us directly at support@zynkrosystems.com");
     } finally {
       setIsSubmitting(false);
@@ -105,6 +207,24 @@ export default function Contact() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Success Message */}
+                  {submitSuccess && (
+                    <Alert className="bg-success/10 border-success">
+                      <CheckCircle2 className="h-4 w-4 text-success" />
+                      <AlertDescription className="text-success">
+                        Thank you! We'll be in touch within 24 hours to schedule your free audit.
+                      </AlertDescription>
+                    </Alert>
+                  )}
+
+                  {/* Error Message */}
+                  {submitError && (
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{submitError}</AlertDescription>
+                    </Alert>
+                  )}
+
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name *</Label>
                     <Input
@@ -140,6 +260,8 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="07123 456789"
+                      pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$|^\d{10,11}$"
+                      title="Please enter a valid UK phone number"
                     />
                   </div>
 
@@ -178,8 +300,305 @@ export default function Contact() {
                     />
                   </div>
 
-                  <Button type="submit" variant="cta" size="lg" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? "Sending..." : "Claim My Free £300 Audit"}
+                  {/* Optional Additional Information */}
+                  <div className="border-t pt-4 space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <Checkbox
+                        id="provideMoreInfo"
+                        checked={formData.provideMoreInfo}
+                        onCheckedChange={(checked) =>
+                          setFormData({ ...formData, provideMoreInfo: checked as boolean })
+                        }
+                      />
+                      <div className="space-y-1 leading-none">
+                        <label
+                          htmlFor="provideMoreInfo"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        >
+                          Help us prepare for our meeting (optional)
+                        </label>
+                        <p className="text-sm text-muted-foreground">
+                          Answer a few quick questions so we can prep specific recommendations before we talk
+                        </p>
+                      </div>
+                    </div>
+
+                    {formData.provideMoreInfo && (
+                      <div className="space-y-6 pl-8 pt-4 border-l-2 border-primary/20">
+                        {/* Service Type Selection */}
+                        <div className="space-y-3">
+                          <Label>I'm most interested in: *</Label>
+                          <RadioGroup
+                            value={formData.serviceType}
+                            onValueChange={(value) => setFormData({ ...formData, serviceType: value })}
+                          >
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="audit" id="audit" />
+                              <Label htmlFor="audit" className="font-normal cursor-pointer">
+                                Free Automation ROI Audit (find bottlenecks & opportunities)
+                              </Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="demo" id="demo" />
+                              <Label htmlFor="demo" className="font-normal cursor-pointer">
+                                Free 24-Hour Website Demo (see new site prototype fast)
+                              </Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="both" id="both" />
+                              <Label htmlFor="both" className="font-normal cursor-pointer">
+                                Not sure yet — help me decide
+                              </Label>
+                            </div>
+                          </RadioGroup>
+                        </div>
+
+                        {/* Preferred Contact Method & Time */}
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="contactMethod">Preferred contact</Label>
+                            <Select
+                              value={formData.contactMethod}
+                              onValueChange={(value) => setFormData({ ...formData, contactMethod: value })}
+                            >
+                              <SelectTrigger id="contactMethod">
+                                <SelectValue placeholder="Select method" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="call">Phone call</SelectItem>
+                                <SelectItem value="sms">SMS</SelectItem>
+                                <SelectItem value="email">Email</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="contactTime">Best time to reach you</Label>
+                            <Select
+                              value={formData.contactTime}
+                              onValueChange={(value) => setFormData({ ...formData, contactTime: value })}
+                            >
+                              <SelectTrigger id="contactTime">
+                                <SelectValue placeholder="Select time" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="today-pm">Today PM</SelectItem>
+                                <SelectItem value="tomorrow-am">Tomorrow AM</SelectItem>
+                                <SelectItem value="anytime">Anytime</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        {/* Location & Timeline */}
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="city">City/Area</Label>
+                            <Input
+                              id="city"
+                              name="city"
+                              value={formData.city}
+                              onChange={handleChange}
+                              placeholder="Northampton"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="timeline">Timeline</Label>
+                            <Select
+                              value={formData.timeline}
+                              onValueChange={(value) => setFormData({ ...formData, timeline: value })}
+                            >
+                              <SelectTrigger id="timeline">
+                                <SelectValue placeholder="Select timeline" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="asap">ASAP</SelectItem>
+                                <SelectItem value="2-4w">2–4 weeks</SelectItem>
+                                <SelectItem value="1-3m">1–3 months</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        {/* Budget & Channel */}
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="budget">Budget (optional)</Label>
+                            <Select
+                              value={formData.budget}
+                              onValueChange={(value) => setFormData({ ...formData, budget: value })}
+                            >
+                              <SelectTrigger id="budget">
+                                <SelectValue placeholder="Select budget band" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="<500">Under £500</SelectItem>
+                                <SelectItem value="500-2k">£500–£2k</SelectItem>
+                                <SelectItem value="2k-5k">£2k–£5k</SelectItem>
+                                <SelectItem value="5k+">£5k+</SelectItem>
+                                <SelectItem value="not-sure">Not sure</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="hearAbout">How did you hear about us?</Label>
+                            <Select
+                              value={formData.hearAbout}
+                              onValueChange={(value) => setFormData({ ...formData, hearAbout: value })}
+                            >
+                              <SelectTrigger id="hearAbout">
+                                <SelectValue placeholder="Select one" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="google">Google</SelectItem>
+                                <SelectItem value="referral">Referral</SelectItem>
+                                <SelectItem value="facebook">Facebook</SelectItem>
+                                <SelectItem value="linkedin">LinkedIn</SelectItem>
+                                <SelectItem value="other">Other</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        {/* Current Lead Volume */}
+                        <div className="space-y-2">
+                          <Label htmlFor="currentLeadVolume">How many leads/enquiries do you get per week?</Label>
+                          <Select
+                            value={formData.currentLeadVolume}
+                            onValueChange={(value) => setFormData({ ...formData, currentLeadVolume: value })}
+                          >
+                            <SelectTrigger id="currentLeadVolume">
+                              <SelectValue placeholder="Select range" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="0-5">0-5 per week</SelectItem>
+                              <SelectItem value="5-15">5-15 per week</SelectItem>
+                              <SelectItem value="15-30">15-30 per week</SelectItem>
+                              <SelectItem value="30+">30+ per week</SelectItem>
+                              <SelectItem value="not-sure">Not sure/Not tracking</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Response Time */}
+                        <div className="space-y-2">
+                          <Label htmlFor="responseTime">How quickly do you typically respond to new leads?</Label>
+                          <Select
+                            value={formData.responseTime}
+                            onValueChange={(value) => setFormData({ ...formData, responseTime: value })}
+                          >
+                            <SelectTrigger id="responseTime">
+                              <SelectValue placeholder="Select response time" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="instant">Within 10 minutes</SelectItem>
+                              <SelectItem value="1-hour">Within 1 hour</SelectItem>
+                              <SelectItem value="same-day">Same day</SelectItem>
+                              <SelectItem value="next-day">Next day</SelectItem>
+                              <SelectItem value="varies">Varies a lot</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Biggest Challenge */}
+                        <div className="space-y-2">
+                          <Label htmlFor="biggestChallenge">What's your biggest challenge right now?</Label>
+                          <Select
+                            value={formData.biggestChallenge}
+                            onValueChange={(value) => setFormData({ ...formData, biggestChallenge: value })}
+                          >
+                            <SelectTrigger id="biggestChallenge">
+                              <SelectValue placeholder="Select your main challenge" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="missing-calls">Missing calls when I'm busy</SelectItem>
+                              <SelectItem value="slow-followup">Slow follow-up losing leads</SelectItem>
+                              <SelectItem value="no-website">No website or outdated one</SelectItem>
+                              <SelectItem value="too-much-admin">Too much time on admin/quotes</SelectItem>
+                              <SelectItem value="not-enough-leads">Not enough leads coming in</SelectItem>
+                              <SelectItem value="poor-conversion">Leads not converting to customers</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Monthly Revenue Range */}
+                        <div className="space-y-2">
+                          <Label htmlFor="monthlyRevenue">Current monthly revenue (approximate)</Label>
+                          <Select
+                            value={formData.monthlyRevenue}
+                            onValueChange={(value) => setFormData({ ...formData, monthlyRevenue: value })}
+                          >
+                            <SelectTrigger id="monthlyRevenue">
+                              <SelectValue placeholder="Select range (kept confidential)" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="under-5k">Under £5k/month</SelectItem>
+                              <SelectItem value="5k-15k">£5k - £15k/month</SelectItem>
+                              <SelectItem value="15k-30k">£15k - £30k/month</SelectItem>
+                              <SelectItem value="30k-50k">£30k - £50k/month</SelectItem>
+                              <SelectItem value="50k+">£50k+/month</SelectItem>
+                              <SelectItem value="prefer-not">Prefer not to say</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Honeypot - visually hidden */}
+                  <div className="sr-only" aria-hidden="true">
+                    <Label htmlFor="companyPosition">Position</Label>
+                    <Input
+                      id="companyPosition"
+                      name="companyPosition"
+                      autoComplete="off"
+                      tabIndex={-1}
+                      value={formData.companyPosition}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  {/* GDPR Consent */}
+                  <div className="flex items-start space-x-3 pt-2">
+                    <Checkbox
+                      id="consent"
+                      checked={formData.consent}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, consent: checked as boolean })
+                      }
+                      required
+                    />
+                    <div className="space-y-1 leading-none">
+                      <label
+                        htmlFor="consent"
+                        className="text-sm font-medium leading-none cursor-pointer"
+                      >
+                        I agree to be contacted about this enquiry *
+                      </label>
+                      <p className="text-xs text-muted-foreground">
+                        We'll never share your info. See our{" "}
+                        <a href="/privacy" className="underline hover:text-primary">
+                          privacy policy
+                        </a>
+                        .
+                      </p>
+                    </div>
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    variant="cta" 
+                    size="lg" 
+                    className="w-full" 
+                    disabled={isSubmitting || !formData.consent}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Claim My Free £300 Audit"
+                    )}
                   </Button>
 
                   <p className="text-xs text-muted-foreground text-center">

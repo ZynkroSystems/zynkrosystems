@@ -4,9 +4,9 @@ import { Phone, MessageSquare, Calendar, Clock } from "lucide-react";
 
 export default function NorthamptonPlumbers() {
   const canonical = "https://zynkrosystems.com/northampton-plumbers";
-  const pageTitle = "Northampton Plumbers: Website Rebuild and Automation | ZynkroSystems";
+  const pageTitle = "Northampton Plumbers: Never Miss Another Emergency Call | ZynkroSystems";
   const pageDesc =
-    "Stop missing emergency calls and leaking quotes. ZynkroSystems rebuilds your plumbing website and automates follow-up so Northampton customers book you first.";
+    "Every missed call is £300+ gone. We build you a lead-capturing website in 24 hours (free demo) plus automations that text back instantly, follow up automatically, and fill your calendar while you work.";
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -14,34 +14,34 @@ export default function NorthamptonPlumbers() {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How fast can you get my new plumbing site and automations live?",
+        "name": "How fast can I see my new website?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Most Northampton plumbers go live in 3 to 14 days depending on scope. We rebuild your site first, then connect missed-call to SMS and booking automations."
+          "text": "You get a working demo in 24 hours. If you like it, we finish the full build and automations in 3-14 days depending on what you need."
         }
       },
       {
         "@type": "Question",
-        "name": "Do I need to switch phone numbers or CRM?",
+        "name": "Do I keep my phone number and existing tools?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. We can keep your existing phone number and tools where possible. We add automation layers that capture calls, send instant texts, and log leads."
+          "text": "Yes. We layer automations on top of what you have. Same number, same workflow. We just make it capture more leads and waste less of your time."
         }
       },
       {
         "@type": "Question",
-        "name": "What results should I expect?",
+        "name": "What if I don't need a new website?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Typical outcomes include more emergency calls captured, higher quote conversion from automated follow-up, and time saved on admin. We include tracking so you can see it."
+          "text": "Then start with a free audit. We will show you exactly where you are losing money right now and what it would take to fix it. No pressure to rebuild if you don't need to."
         }
       },
       {
         "@type": "Question",
-        "name": "Is there a guarantee?",
+        "name": "What is the guarantee?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. If we do not improve your lead capture in 45 days, we work free until you do."
+          "text": "If we do not improve your lead capture in 45 days, we work for free until we do. You only win."
         }
       }
     ]
@@ -63,11 +63,9 @@ export default function NorthamptonPlumbers() {
       "telephone": "+44 1604 123 456"
     },
     "description":
-      "Rebuild your plumbing website and automate lead capture, missed-call to SMS, follow-up and booking so Northampton customers choose you first.",
+      "Stop losing £300+ per missed call. We rebuild plumbing websites and add automations that capture leads, respond instantly, and book jobs 24/7 for Northampton plumbers.",
     "offers": {
       "@type": "Offer",
-      "price": "200",
-      "priceCurrency": "GBP",
       "url": canonical,
       "availability": "https://schema.org/InStock"
     }
@@ -96,112 +94,127 @@ export default function NorthamptonPlumbers() {
         country="UK"
         slugPath="/northampton-plumbers"
         heroImage="/local/plumber.png"
-        heroAlt="Plumbing automation dashboard showing lead capture and booking system for Northampton plumbers"
+        heroAlt="Plumbing automation dashboard showing instant SMS responses and automatic booking for Northampton plumbers"
 
-        // Custom Headlines
-        headline="Northampton Plumbers: Stop Missing Emergency Calls While You're Under a Sink"
-        subheadline="We rebuild your website and automate follow-up so you capture every boiler breakdown, leak repair, and bathroom refit in Northampton even when you're on a job. If we do not improve your lead flow in 45 days, we work free until you do."
+        // Hormozi-Style Headlines
+        headline="Every Missed Call is £300 You'll Never See Again"
+        subheadline="Northampton plumbers lose 12-20 jobs per month to missed calls and slow follow-up. We fix that in 24 hours with a website that captures leads and automations that respond instantly even when you're elbow-deep in a boiler. See your new site tomorrow or get a free audit if you're not sure you need one yet."
 
-        // CTAs
+        // CTAs - Two-Path Funnel
         primaryCTA={{
-          label: "Book Free Northampton Audit",
-          href: "/contact?source=northampton-plumbers"
+          label: "SEE MY NEW SITE IN 24H (FREE DEMO)",
+          href: "/contact?source=northampton-plumbers&type=demo"
         }}
         secondaryCTA={{
-          label: "See What's Included",
-          href: "#how-it-works"
+          label: "NOT READY? GET FREE AUDIT",
+          href: "/contact?source=northampton-plumbers&type=audit"
         }}
 
-        // Northampton-Specific Pain Points
+        // Northampton-Specific Pain (Value-Focused)
         painPoints={[
           {
             icon: Phone,
-            text: "Missing emergency calls from panicked homeowners while you are fixing someone else's boiler"
+            text: "You miss 3 calls today while fixing a radiator. That's £900+ to a competitor who picked up."
           },
           {
             icon: MessageSquare,
-            text: "Bathroom refit enquiries sitting unanswered for 3 days then booking your competitor"
+            text: "A £4,000 bathroom refit enquiry sits in your voicemail for 2 days. They've already booked someone else."
           },
           {
             icon: Calendar,
-            text: "Playing phone tag with customers who just want to book a quote slot"
+            text: "You spend 6 hours this week playing phone tag trying to book quote appointments. That's time you're not billing."
           },
           {
             icon: Clock,
-            text: "Spending evenings typing up quotes instead of with your family"
+            text: "Every evening you type quotes and chase customers instead of being home. Your family sees you less, you make the same money."
           }
         ]}
 
-        // What Northampton Plumbers Get
+        // What They Get (Outcome-Driven)
         features={[
           {
-            title: "Emergency-Ready Website",
-            desc: "Mobile-first site with instant call buttons and emergency contact forms. Built for Northampton homeowners searching 'plumber near me' at 11pm."
+            title: "Website That Actually Converts",
+            desc: "Not a brochure. A lead machine. Mobile-first, loads in 1 second, emergency call button top-right, quote form that takes 45 seconds. Built for the homeowner panicking at 11pm searching 'emergency plumber Northampton'."
           },
           {
-            title: "Missed Call to Instant SMS",
-            desc: "Someone calls about a leaking pipe while you are working? They get a text in 10 seconds: 'Thanks for calling. We will ring you back within the hour. For emergencies, text URGENT.'"
+            title: "Instant SMS Response (10 Seconds)",
+            desc: "Customer calls while you're working? Automated text fires: 'Got your call about [their issue]. Ringing you back within 60 mins. Emergency? Reply URGENT and we'll call in 5.' They stay warm. You stay booked."
           },
           {
-            title: "Automated Quote Follow-Up",
-            desc: "Sent a bathroom quote? The system follows up in 3 days, then 7 days automatically. No manual chasing just booked jobs."
+            title: "Automatic Quote Follow-Up",
+            desc: "Send a bathroom quote, system follows up day 3 and day 7 automatically. No manual chasing. Just 'Still interested?' texts that turn 30% of quotes into booked jobs without you lifting a finger."
           },
           {
-            title: "Online Booking Calendar",
-            desc: "Let Northampton customers book quote slots 24/7. They pick a time, it is in your calendar, reminder goes out automatically."
+            title: "Self-Booking Calendar",
+            desc: "Customers book their own quote slots at 2am on Sunday if they want. It syncs to your calendar, sends them a reminder, and you just show up. Zero phone tag."
           }
         ]}
 
-        // Outcomes for Northampton Plumbers
+        // Benefits (Quantified Outcomes)
         benefits={[
-          { title: "Capture 4x more emergency calls", desc: "Never lose a burst pipe job again" },
-          { title: "Save 12 hours per week", desc: "No more admin evenings" },
-          { title: "Convert 50% more quotes", desc: "Automatic follow-up closes more refits" },
-          { title: "Book 20+ jobs per month", desc: "Consistent pipeline, less stress" }
+          { 
+            title: "Capture £3,600+ in jobs you're losing now", 
+            desc: "Stop bleeding emergency calls to competitors" 
+          },
+          { 
+            title: "Get 12 hours back every week", 
+            desc: "No more admin evenings. Automations do the chasing." 
+          },
+          { 
+            title: "Convert 50% more quotes to jobs", 
+            desc: "Consistent follow-up = more bathroom refits closed" 
+          },
+          { 
+            title: "Book 25+ jobs per month on autopilot", 
+            desc: "Calendar fills itself while you work" 
+          }
         ]}
 
-        // Process Steps
+        // Process (Two-Path Funnel)
         steps={[
           {
             num: 1,
-            title: "Free Northampton Audit",
-            desc: "We review your current website, Google ranking, and response times. You see where Northampton customers slip through the cracks."
+            title: "Pick Your Path",
+            desc: "DEMO PATH: Want a new site? Tell us your vibe (professional, friendly, premium). We build you a working demo in 24 hours. You see it, test it, decide if it's better than what you have. | AUDIT PATH: Not sure you need a rebuild? We audit your current setup for free and show you exactly where leads are slipping and what it's costing you. Then you decide."
           },
           {
             num: 2,
-            title: "Rapid Build (3 to 14 Days)",
-            desc: "Website rebuilt in 3 to 5 days. Missed-call SMS and booking system connected within 2 weeks. You review, we tweak, then go live."
+            title: "We Build While You Work (3-14 Days)",
+            desc: "If you go with the demo, we finish the full site in 3-5 days and connect the automations (missed-call SMS, quote follow-up, booking calendar) within 2 weeks. You review, we tweak, you approve. No surprises."
           },
           {
             num: 3,
-            title: "Launch and Optimise",
-            desc: "We monitor performance, test SMS response rates, and tune your booking flow based on real Northampton customer behavior."
+            title: "Launch and Stack Wins",
+            desc: "Site goes live. Automations turn on. We track everything: calls captured, texts sent, quotes converted, hours saved. You see the numbers. We tune based on what Northampton customers actually do. You just watch jobs roll in."
           }
         ]}
 
-        // Social Proof placeholder
+        // Social Proof (Honest Placeholder)
         testimonials={[
-          {
-            name: "Coming soon",
-            business: "Local plumbing businesses in Northampton",
-            quote: "Results from our first clients launching soon.",
-            result: "Local case studies coming soon"
-          }
-        ]}
+        {
+          name: "Coming soon",
+          business: "Northampton Plumbing Businesses",
+          quote:
+            "We’re building proof, not hype. Early pilot feedback points to faster response times and smoother bookings. Full case studies will be published after the first 45-day rollout.",
+          result: `Pilot program in progress — updated ${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}`,
+          isPlaceholder: true
+        }
+      ]}
 
-        // Pricing & Brand
-        priceFrom="£200"
+        // No Price - Removed
+        priceFrom=""
+        
         brand={{
           name: "ZynkroSystems",
           url: "https://zynkrosystems.com",
           phone: "01604 123 456"
         }}
 
-        // Guarantee
-        guarantee="If we do not improve your lead capture in 45 days, we work free until you do."
+        // Risk Reversal
+        guarantee="If we don't capture more leads and save you time in 45 days, we work for free until you win. You risk nothing. We risk our time."
 
         // Local Trust Signals
-        businessesServed={47}
+
         yearsInArea={3}
       />
     </>

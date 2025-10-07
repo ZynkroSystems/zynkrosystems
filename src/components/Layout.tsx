@@ -27,7 +27,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 size="sm" 
                 className="ml-1 h-5 px-2 text-xs bg-black text-white hover:bg-gray-800 border-black"
               >
-                <span className="hidden sm:inline">Claim Now</span>
+                <span className="hidden sm:inline">CLAIM NOW</span>
                 <span className="sm:hidden">Get</span>
                 <ArrowRight className="ml-1 h-3 w-3" />
               </Button>
@@ -89,7 +89,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 Blog
               </Link>
               <Button variant="cta" size="lg" asChild>
-                <Link to="/contact">Free Audit</Link>
+                <Link to="/contact">FREE AUDIT</Link>
               </Button>
             </div>
 
