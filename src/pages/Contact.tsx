@@ -85,24 +85,28 @@ export default function Contact() {
     setSubmitError("");
 
     try {
-      // Compose comprehensive message
-      const composedMessage = 
-        `Phone: ${formData.phone}\nCompany: ${formData.company}\nWebsite: ${formData.website}\nCity: ${formData.city || "Not specified"}\n` +
-        `Preferred Contact: ${formData.contactMethod || "-"} @ ${formData.contactTime || "-"}\n` +
-        `Timeline: ${formData.timeline || "-"} | Budget: ${formData.budget || "-"} | Heard About Us: ${formData.hearAbout || "-"}\n\n` +
-        `Message:\n${formData.message}\n\n` +
-        (formData.provideMoreInfo
-          ? `=== ADDITIONAL INFORMATION ===\nService Type: ${formData.serviceType}\nCurrent Lead Volume: ${formData.currentLeadVolume}\n` +
-            `Response Time: ${formData.responseTime}\nBiggest Challenge: ${formData.biggestChallenge}\nMonthly Revenue: ${formData.monthlyRevenue}\n`
-          : '') +
-        `\n=== ATTRIBUTION ===\n` +
-        `UTM Source: ${formData.utm.utm_source || "-"}\nUTM Medium: ${formData.utm.utm_medium || "-"}\nUTM Campaign: ${formData.utm.utm_campaign || "-"}\n` +
-        `UTM Term: ${formData.utm.utm_term || "-"}\nUTM Content: ${formData.utm.utm_content || "-"}\nReferrer: ${formData.utm.referrer || "-"}`;
-
+      // Send structured data instead of composed text
       const payload = {
         name: formData.name.trim(),
         email: formData.email.trim(),
-        message: composedMessage,
+        phone: formData.phone.trim(),
+        company: formData.company.trim(),
+        website: formData.website.trim(),
+        city: formData.city.trim(),
+        contactMethod: formData.contactMethod,
+        contactTime: formData.contactTime,
+        timeline: formData.timeline,
+        budget: formData.budget,
+        hearAbout: formData.hearAbout,
+        message: formData.message.trim(),
+        provideMoreInfo: formData.provideMoreInfo,
+        serviceType: formData.serviceType,
+        currentLeadVolume: formData.currentLeadVolume,
+        responseTime: formData.responseTime,
+        biggestChallenge: formData.biggestChallenge,
+        monthlyRevenue: formData.monthlyRevenue,
+        utm: formData.utm,
+        sourcePath: window.location.pathname,
       };
 
       const response = await fetch('/api/contact', {
