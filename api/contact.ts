@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import { render } from "@react-email/render";
-import ContactLeadEmail from "../emails/ContactLeadEmail";
+import ContactLeadEmail from "../emails/ContactLeadEmail.js";
 
 // Check if API key exists
 if (!process.env.RESEND_KEY) {
